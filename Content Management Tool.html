@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Content Management Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .editor {
+            border: 1px solid #ccc;
+            min-height: 300px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Content Management Tool</h1>
+    
+    <div class="editor">
+        <div class="element" draggable="true">
+            <p>Drag me! I'm a text element.</p>
+        </div>
+        <div class="element" draggable="true">
+            <img src="file:///C:/Users/ankit/Downloads/WhatsApp%20Image%202023-08-08%20at%201.45.51%20PM.jpeg" alt="Drag me! I'm an image element.">
+        </div>
+        <div class="element" draggable="true">
+            <iframe width="560" height="315" src="https://www.facebook.com/reel/" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <div class="preview">
+        <h2>Preview</h2>
+        <div class="preview-content"></div>
+    </div>
+
+    <script>
+        const editor = document.querySelector('.editor');
+        const previewContent = document.querySelector('.preview-content');
+
+        editor.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text/plain', event.target.outerHTML);
+        });
+
+        previewContent.addEventListener('dragover', function (event) {
+            event.preventDefault();
+        });
+
+        previewContent.addEventListener('drop', function (event) {
+            event.preventDefault();
+            const elementHTML = event.dataTransfer.getData('text/plain');
+            const newElement = document.createElement('div');
+            newElement.innerHTML = elementHTML;
+            previewContent.appendChild(newElement);
+        });
+    </script>
+</body>
+</html>
